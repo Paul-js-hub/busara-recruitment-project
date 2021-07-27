@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -14,6 +15,8 @@ const Register = () => {
   const [full_name, setFullName] = useState("");
   const [device_details, setDeviceDetails] = useState({});
   const [location, setLocation] = useState("");
+
+  let history = useHistory()
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +34,9 @@ const Register = () => {
       })
       .then((response) => {
         console.log("RES", response);
+        if(response.data.key !== ""){
+            history.push('/login')
+        }
       })
       .catch((err) => {
         console.log("Err", err.response);
@@ -95,6 +101,7 @@ const Register = () => {
             className="input"
             type="text"
             value={referral_code}
+            placeholder="not required"
             onChange={(e) => setReferralCode(e.target.value)}
           />
         </div>
