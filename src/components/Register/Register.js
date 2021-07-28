@@ -33,13 +33,12 @@ const Register = () => {
         location,
       })
       .then((response) => {
-        console.log("RES", response);
         if(response.data.key !== ""){
             history.push('/login')
         }
       })
       .catch((err) => {
-        console.log("Err", err.response);
+        //console.log("Err", err.response);
         if (err.response) {
           toast(err.response.data.Error, { type: "error" });
         }
