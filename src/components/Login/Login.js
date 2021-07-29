@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import "./login.css";
@@ -6,6 +7,8 @@ import "./login.css";
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+
+  let history = useHistory();
 
   const loginUser = () => {
     let clientID = process.env.REACT_APP_CLIENT_ID;
@@ -26,7 +29,13 @@ const Login = () => {
         },
       })
       .then((response) => {
-        console.log("RES", response.data);
+        //console.log("RES", response.data);
+        const access_token = response.data.access_token;
+        console.log("access_token", access_token)
+        localStorage.setItem("access_token", access_token);
+        if(access_token !== ""){
+            history.push("/forms")
+        }
       })
       .catch((error) => {
         console.log("ERROR", error.response.data);
