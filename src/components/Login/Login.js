@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import "./login.css";
 
@@ -37,8 +38,10 @@ const Login = () => {
             history.push("/forms")
         }
       })
-      .catch((error) => {
-        console.log("ERROR", error.response.data);
+      .catch((err) => {
+        if(err.response){
+            toast(err.response.data.error)
+        }
       });
   };
 
@@ -65,7 +68,7 @@ const Login = () => {
         </button>
         <p>
           Don't have an account?{" "}
-          <a href={process.env.REACT_APP_BASE_URL}>Register</a>
+          <Link to="/">Register</Link>
         </p>
       </div>
     </div>

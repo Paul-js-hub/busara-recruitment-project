@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -50,7 +50,7 @@ const Register = () => {
       <form className="form" onSubmit={onSubmit}>
           <div className="top-row">
               <h3>Create Account</h3>
-              <p>Already have an account? <a href={process.env.REACT_APP_POST_REGISTRATION_URL}>Sign in</a></p>
+              <p>Already have an account? <Link to="/login">Sign in</Link></p>
           </div>
         <div className="input-area">
           <label className="label">Username</label>
