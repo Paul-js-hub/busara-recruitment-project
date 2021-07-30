@@ -11,6 +11,20 @@ const Login = () => {
 
   let history = useHistory();
 
+  const getUserProfile =() =>{
+    const access_token = localStorage.getItem("access_token");
+    axios.get("http://fullstack-role.busara.io/api/v1/users/current-user/", {
+      headers:{
+        Authorization: `Bearer ${access_token}`,
+      }
+    })
+    .then((response)=>{
+      let userID = response.data.id;
+      localStorage.setItem("userID", userID)
+    })
+    history.push("/forms")
+  }
+
   const loginUser = () => {
     let clientID = process.env.REACT_APP_CLIENT_ID;
     let clientSecret = process.env.REACT_APP_CLIENT_SECRET;
@@ -21,8 +35,8 @@ const Login = () => {
         url: "/api/v1/oauth/token/",
         baseURL: "http://fullstack-role.busara.io",
         auth: {
-          username: `${clientID}`,
-          password: `${clientSecret}`,
+          username: clientID,
+          password: clientSecret,
         },
         data: `grant_type=password&username=${username}&password=${password}`,
         headers: {
@@ -32,10 +46,9 @@ const Login = () => {
       .then((response) => {
         //console.log("RES", response.data);
         const access_token = response.data.access_token;
-        console.log("access_token", access_token)
         localStorage.setItem("access_token", access_token);
         if(access_token !== ""){
-            history.push("/forms")
+            getUserProfile()
         }
       })
       .catch((err) => {
